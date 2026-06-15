@@ -47,7 +47,7 @@ export default function RecipesGrid(): JSX.Element {
       setSearchParams(searchInput ? { search: searchInput, page: '1' } : {})
     }, 450)
     return () => clearTimeout(t)
-  }, [searchInput])
+  }, [searchInput, setSearchParams])
 
   const { data, error, isLoading } = useRecipes(search, page, pageSize)
   const { items: recipes = [], total = 0 } = data || {}

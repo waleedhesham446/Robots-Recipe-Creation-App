@@ -1,6 +1,5 @@
 import { useMutation, UseMutationResult } from '@tanstack/react-query'
 import client from '../api/client'
-import { Step } from '../models/steps'
 import { Recipe } from '../models/recipe'
 
 async function deleteRecipe(id: string): Promise<Recipe> {

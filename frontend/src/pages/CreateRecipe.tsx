@@ -30,7 +30,7 @@ export default function RecipeCreatePage() {
 
   const createMutation = useCreateRecipe();
   const editMutation = useEditRecipe();
-  const { data: recipeData, isLoading: isRecipeLoading, error: recipeError } = useRecipe(id);
+  const { data: recipeData } = useRecipe(id);
 
   const handleAddStep = (index: number) => {
     setSteps((prev) => {
