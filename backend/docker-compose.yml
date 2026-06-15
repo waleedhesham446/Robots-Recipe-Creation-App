@@ -5,11 +5,11 @@ services:
     image: postgres:16
     restart: always
     environment:
-      POSTGRES_USER: recipe_user
-      POSTGRES_PASSWORD: recipe_pass
-      POSTGRES_DB: recipe_db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
     ports:
-      - "5432:5432"
+      - "${DB_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 

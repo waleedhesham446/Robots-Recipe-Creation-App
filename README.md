@@ -91,7 +91,7 @@ cp .env.example .env
 `.env`:
 
 ```
-DATABASE_URL=postgresql+psycopg2://recipe_user:recipe_pass@localhost:5432/recipe_db
+DATABASE_URL=postgresql://recipe_user:recipe_pass@localhost:5432/recipe_db
 ```
 
 Start PostgreSQL:
