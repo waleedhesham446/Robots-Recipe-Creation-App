@@ -5,8 +5,14 @@ from pydantic import BaseModel, ConfigDict
 
 from app.models import StepType
 
-from app.schemas.step.take_image import *
-from app.schemas.step.unscrewing import *
+from app.schemas.step.take_image import (
+    TakeImageStepCreate,
+    TakeImageStepOut,
+)
+from app.schemas.step.unscrewing import (
+    UnscrewingStepCreate,
+    UnscrewingStepOut,
+)
 
 
 StepCreate = Union[TakeImageStepCreate, UnscrewingStepCreate]
@@ -21,3 +27,13 @@ class StepOut(BaseModel):
     properties: Union[TakeImageStepOut, UnscrewingStepOut]
 
     model_config = ConfigDict(from_attributes=True)
+
+
+__all__ = [
+    "StepCreate",
+    "StepOut",
+    "TakeImageStepCreate",
+    "TakeImageStepOut",
+    "UnscrewingStepCreate",
+    "UnscrewingStepOut",
+]

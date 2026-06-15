@@ -16,9 +16,10 @@ from sqlalchemy.orm import relationship
 
 from app.database import Base
 
-from app.models.step.enums import *
-from app.models.step.take_image import *
-from app.models.step.unscrewing import *
+# Explicit imports to avoid star-imports which break static analysis (ruff)
+from app.models.step.enums import StepType, ImageScope, UnscrewingMode
+from app.models.step.take_image import TakeImageStep
+from app.models.step.unscrewing import UnscrewingStep
 
 class Step(Base):
     __tablename__ = "steps"
@@ -60,3 +61,13 @@ class Step(Base):
         elif self.step_type == StepType.unscrewing:
             return self.unscrewing_detail
         return None
+
+
+__all__ = [
+    "Step",
+    "TakeImageStep",
+    "UnscrewingStep",
+    "StepType",
+    "ImageScope",
+    "UnscrewingMode",
+]
