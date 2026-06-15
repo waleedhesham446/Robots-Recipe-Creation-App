@@ -6,6 +6,7 @@ from app.models.step import (
 	StepType,
 	ImageScope,
 	UnscrewingMode,
+    Base
 )
 
 __all__ = [
@@ -16,4 +17,5 @@ __all__ = [
 	"StepType",
 	"ImageScope",
 	"UnscrewingMode",
+	"Base",
 ]
