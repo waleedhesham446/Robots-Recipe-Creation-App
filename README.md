@@ -69,67 +69,41 @@ git clone <repository-url>
 cd recipe-creation-app
 ```
 
-### 2. Backend setup
+### 2. Run the whole stack with Docker Compose
+
+Create a `.env` file in the repository root (example):
+
+```
+DB_USER=recipe_user
+DB_PASS=recipe_pass
+DB_NAME=recipe_db
+DB_PORT=5432
+FRONTEND_PORT=3000
+```
+
+Start services:
 
 ```bash
-cd backend
-python -m venv venv
-
-# activate the virtual environment
-source venv/bin/activate        # macOS/Linux
-venv\Scripts\activate           # Windows
-
-pip install -r requirements.txt
+docker-compose up --build -d
 ```
 
-Set up environment variables:
+View logs and status:
 
 ```bash
-cp .env.example .env
+docker-compose ps
+docker-compose logs -f backend
 ```
 
-`.env`:
+Access:
 
-```
-DATABASE_URL=postgresql://recipe_user:recipe_pass@localhost:5432/recipe_db
-```
+- Backend API and docs: `http://localhost:8000/api/v1` (Swagger UI: `/docs`)
+- Frontend: `http://localhost:${FRONTEND_PORT:-3000}`
 
-Start PostgreSQL:
+Stop and remove:
 
 ```bash
-docker-compose up -d
+docker-compose down
 ```
-
-Run database migrations:
-
-```bash
-alembic upgrade head
-```
-
-Start the API server:
-
-```bash
-uvicorn app.main:app --reload
-```
-
-The API is now available at `http://127.0.0.1:8000`.
-
-- Interactive docs (Swagger UI): `http://127.0.0.1:8000/docs`
-- Alternative docs (ReDoc): `http://127.0.0.1:8000/redoc`
-
-### 3. Frontend setup
-
-In a new terminal:
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-The frontend is now available at `http://localhost:5173` (default Vite port).
-
-> If the frontend's API base URL differs from `http://127.0.0.1:8000`, configure it via an environment variable (e.g. `VITE_API_BASE_URL` in `frontend/.env`) and update API calls accordingly.
 
 ---
 
@@ -173,40 +147,6 @@ Full interactive documentation is available via Swagger UI at `/docs` once the b
 |---|---|---|
 | `unscrewing_mode` | `"automatic"` \| `"specific"` | |
 | `coordinate_x`, `coordinate_y` | integer (≥ 0) | Required only when `unscrewing_mode` is `"specific"` |
-
-### Example: create a recipe
-
-```bash
-curl -X POST http://127.0.0.1:8000/recipes \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Battery Disassembly v1",
-    "description": "Initial test recipe",
-    "steps": [
-      {
-        "step_type": "take_image",
-        "name": "Capture top section",
-        "description": "Image of the top-left corner of the battery",
-        "image_url": null,
-        "properties": {
-          "include_pointcloud": true,
-          "image_scope": "section",
-          "center_x": 100,
-          "center_y": 50
-        }
-      },
-      {
-        "step_type": "unscrewing",
-        "name": "Remove corner screw",
-        "description": null,
-        "image_url": null,
-        "properties": {
-          "unscrewing_mode": "automatic"
-        }
-      }
-    ]
-  }'
-```
 
 ### Error responses
 
