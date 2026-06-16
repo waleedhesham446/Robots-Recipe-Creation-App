@@ -1,3 +1,3 @@
 from app.routers.recipes import router as recipes_router
 
-__all__ = ["router"]
+__all__ = ["recipes_router"]
